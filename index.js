@@ -1,15 +1,31 @@
 var loaderUtils = require('loader-utils');
 var MessageFormat = require('messageformat');
 
-module.exports = function(messages) {
+module.exports = function(content) {
   var options = loaderUtils.getOptions(this);
-  let lc = options.locale;
-  if (typeof lc === 'string' && lc.indexOf(',') !== -1) lc = lc.split(',');
-  var mf = new MessageFormat(lc);
-  if (options.biDiSupport) mf.setBiDiSupport();
-  if (options.disablePluralKeyChecks) mf.disablePluralKeyChecks();
-  if (options.formatters) mf.addFormatters(options.formatters);
-  if (options.intlSupport) mf.setIntlSupport(true);
-  if (options.strictNumberSign) mf.setStrictNumberSign();
-  return mf.compile(JSON.parse(messages)).toString('module.exports');
-}
+  var locale = options.locale;
+  if (typeof locale === 'string' && locale.indexOf(',') !== -1) locale = locale.split(',');
+  var messages = JSON.parse(content);
+  var messageFormat = new MessageFormat(locale);
+  if (options.disablePluralKeyChecks) {
+    messageFormat.disablePluralKeyChecks();
+  }
+  if (options.intlSupport) {
+    messageFormat.setIntlSupport(true);
+  }
+  if (options.biDiSupport) {
+    messageFormat.setBiDiSupport();
+  }
+  if (options.formatters) {
+    messageFormat.addFormatters(options.formatters);
+  }
+  if (options.strictNumberSign) {
+    messageFormat.setStrictNumberSign();
+  }
+  var messageFunctions = messageFormat.compile(messages);
+
+  this.cacheable && this.cacheable();
+  this.value = [ messageFunctions ];
+
+  return messageFunctions.toString('module.exports');
+};
