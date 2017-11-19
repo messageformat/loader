@@ -45,17 +45,17 @@ The default option values are shown, and are not required. [See below](#options)
 
 ### example.js
 
-ES5, without configuration:
-```js
-var messages = require('messageformat-loader?locale=en!./messages.json');
-messages['ordinal-example']({ N: 1 });
-// => 'The 1st message.'
-```
-
 ES6, with configuration:
 ```js
 import messages from './messages.json'
 messages['ordinal-example']({ N: 1 })
+// => 'The 1st message.'
+```
+
+ES5, without configuration:
+```js
+var messages = require('messageformat-loader?locale=en!./messages.json');
+messages['ordinal-example']({ N: 1 });
 // => 'The 1st message.'
 ```
 
