@@ -18,6 +18,7 @@ For a working demo of the loader, run `npm install` in the `example/` directory,
 {
   test: /\bmessages\.json$/,
   loader: require.resolve('messageformat-loader'),
+  type: "javascript/auto", // Required for WebPack 4
   options: {
     biDiSupport: false,
     disablePluralKeyChecks: false,
