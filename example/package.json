@@ -4,16 +4,17 @@
   "description": "Small example for messageformat-loader",
   "scripts": {
     "build": "webpack",
-    "postinstall": "cd .. && npm install && npm install --no-save messageformat",
+    "postinstall": "cd .. && npm install && npm install --no-save 'file:./example/node_modules/messageformat' 'file:./example/node_modules/webpack'",
     "prepare": "npm run build"
   },
   "main": "src/index.js",
-  "repository": "https://github.com/eemeli/messageformat-loader",
+  "repository": "https://github.com/messageformat/loader",
   "author": "Eemeli Aro <eemeli@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "messageformat": "^1.0.2",
+    "messageformat": "^2.0.2",
     "messageformat-loader": "file:../",
-    "webpack": "^3.8.1"
+    "webpack": "^4.10.1",
+    "webpack-cli": "^2.1.4"
   }
 }
