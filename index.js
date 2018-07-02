@@ -1,6 +1,17 @@
 var loaderUtils = require('loader-utils');
 var MessageFormat = require('messageformat');
 
+var JavascriptParser;
+var JavascriptGenerator;
+try {
+  JavascriptParser = require('webpack/lib/Parser');
+  JavascriptGenerator = require('webpack/lib/JavascriptGenerator');
+} catch (error) {
+  if (error.code !== 'MODULE_NOT_FOUND') {
+    throw e;
+  }
+}
+
 module.exports = function(content) {
   var options = loaderUtils.getOptions(this);
   var locale = options.locale;
@@ -26,6 +37,15 @@ module.exports = function(content) {
 
   this.cacheable && this.cacheable();
   this.value = [ messageFunctions ];
+
+  // BEGIN HACK
+  // for https://github.com/webpack/webpack/issues/7057
+  if (JavascriptParser && JavascriptGenerator) {
+    this._module.type = 'javascript/auto';
+    this._module.parser = new JavascriptParser();
+    this._module.generator = new JavascriptGenerator();
+  }
+  // END HACK
 
   return messageFunctions.toString('module.exports');
 };

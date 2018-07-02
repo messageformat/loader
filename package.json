@@ -29,7 +29,8 @@
   },
   "homepage": "https://github.com/messageformat/loader#readme",
   "peerDependencies": {
-    "messageformat": ">=1.0.0"
+    "messageformat": ">=1.0.0",
+    "webpack": ">=1.0.0"
   },
   "dependencies": {
     "loader-utils": "^1.1.0"
